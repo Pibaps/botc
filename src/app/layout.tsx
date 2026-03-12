@@ -31,6 +31,11 @@ export const metadata: Metadata = {
   description:
     "Guide complet de Blood on the Clocktower : personnages, règles, stratégies, conseils du conteur. Disponible en français et en anglais.",
   keywords: ["blood on the clocktower", "BOTC", "guide", "wiki", "jeu"],
+  // prevent search engines from indexing or following links
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({
