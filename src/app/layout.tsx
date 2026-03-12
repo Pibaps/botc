@@ -36,6 +36,13 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  // favicons and icons for various platforms (using existing assets)
+  icons: {
+    icon: "/assets/botc/Dicbreaker_logo-0eedd9eb95.avif",
+    apple: "/assets/botc/Dicbreaker_logo-0eedd9eb95.avif",
+    // classic favicon file for older browsers (optional)
+    shortcut: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
