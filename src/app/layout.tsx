@@ -31,17 +31,26 @@ export const metadata: Metadata = {
   description:
     "Guide complet de Blood on the Clocktower : personnages, règles, stratégies, conseils du conteur. Disponible en français et en anglais.",
   keywords: ["blood on the clocktower", "BOTC", "guide", "wiki", "jeu"],
+  // site icons (favicon/etc.) – using an image scraped from our assets instead of Next.js default
+  icons: {
+    icon: [
+      {
+        url: "/assets/botc/wiki.bloodontheclocktower.com/Icon_clockmaker-34b1a40ce2.png",
+        type: "image/png",
+        sizes: "32x32",
+      },
+      {
+        url: "/assets/botc/wiki.bloodontheclocktower.com/Icon_clockmaker-34b1a40ce2.png",
+        type: "image/png",
+        sizes: "16x16",
+      },
+    ],
+    shortcut: "/assets/botc/wiki.bloodontheclocktower.com/Icon_clockmaker-34b1a40ce2.png",
+  },
   // prevent search engines from indexing or following links
   robots: {
     index: false,
     follow: false,
-  },
-  // favicons and icons for various platforms (using existing assets)
-  icons: {
-    icon: "/assets/botc/Dicbreaker_logo-0eedd9eb95.avif",
-    apple: "/assets/botc/Dicbreaker_logo-0eedd9eb95.avif",
-    // classic favicon file for older browsers (optional)
-    shortcut: "/favicon.ico",
   },
 };
 
