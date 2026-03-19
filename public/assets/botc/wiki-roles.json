@@ -1,0 +1,422 @@
+[
+  {
+    "id": "washerwoman",
+    "name": "Washerwoman",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "librarian",
+    "name": "Librarian",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "investigator",
+    "name": "Investigator",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "chef",
+    "name": "Chef",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "empath",
+    "name": "Empath",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "fortune-teller",
+    "name": "Fortune Teller",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "undertaker",
+    "name": "Undertaker",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "monk",
+    "name": "Monk",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "ravenkeeper",
+    "name": "Ravenkeeper",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "virgin",
+    "name": "Virgin",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "slayer",
+    "name": "Slayer",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "soldier",
+    "name": "Soldier",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "mayor",
+    "name": "Mayor",
+    "role_type": "townsfolk",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "butler",
+    "name": "Butler",
+    "role_type": "outsider",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "saint",
+    "name": "Saint",
+    "role_type": "outsider",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "recluse",
+    "name": "Recluse",
+    "role_type": "outsider",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "drunk",
+    "name": "Drunk",
+    "role_type": "outsider",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "poisoner",
+    "name": "Poisoner",
+    "role_type": "minion",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "spy",
+    "name": "Spy",
+    "role_type": "minion",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "baron",
+    "name": "Baron",
+    "role_type": "minion",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "scarlet-woman",
+    "name": "Scarlet Woman",
+    "role_type": "minion",
+    "edition": "trouble-brewing",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "grandmother",
+    "name": "Grandmother",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "sailor",
+    "name": "Sailor",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "chambermaid",
+    "name": "Chambermaid",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "exorcist",
+    "name": "Exorcist",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "innkeeper",
+    "name": "Innkeeper",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "gambler",
+    "name": "Gambler",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "gossip",
+    "name": "Gossip",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "courtier",
+    "name": "Courtier",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "professor",
+    "name": "Professor",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "minstrel",
+    "name": "Minstrel",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "tea-lady",
+    "name": "Tea Lady",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "pacifist",
+    "name": "Pacifist",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "fool",
+    "name": "Fool",
+    "role_type": "townsfolk",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "goon",
+    "name": "Goon",
+    "role_type": "outsider",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "lunatic",
+    "name": "Lunatic",
+    "role_type": "outsider",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "tinker",
+    "name": "Tinker",
+    "role_type": "outsider",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "moonchild",
+    "name": "Moonchild",
+    "role_type": "outsider",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "godfather",
+    "name": "Godfather",
+    "role_type": "minion",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "devil-39-s-advocate",
+    "name": "Devil&#39;s Advocate",
+    "role_type": "minion",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "assassin",
+    "name": "Assassin",
+    "role_type": "minion",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  },
+  {
+    "id": "mastermind",
+    "name": "Mastermind",
+    "role_type": "minion",
+    "edition": "bad-moon-rising",
+    "ability": "",
+    "first_night": false,
+    "other_nights": false,
+    "link": null
+  }
+]

@@ -7,6 +7,7 @@ import { useLang } from "@/context/LangContext";
 type NavMode = "immersive" | "doc";
 
 const navLinks = [
+  { href: "/grimoire", labelFr: "Grimoire", labelEn: "Grimoire" },
   { href: "/characters", labelFr: "Personnages", labelEn: "Characters" },
   { href: "/rules", labelFr: "Règles", labelEn: "Rules" },
   { href: "/storyteller", labelFr: "Conteur", labelEn: "Storyteller" },

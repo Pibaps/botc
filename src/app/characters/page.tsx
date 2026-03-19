@@ -26,9 +26,9 @@ export default function CharactersPage() {
 
   const editions: { id: FilterEdition; labelFr: string; labelEn: string; icon: string }[] = [
     { id: "all", labelFr: "Toutes", labelEn: "All", icon: "✦" },
-    { id: "trouble-brewing", labelFr: "Tumulte en Brasserie", labelEn: "Trouble Brewing", icon: "🍺" },
-    { id: "bad-moon-rising", labelFr: "Mauvaise Lune", labelEn: "Bad Moon Rising", icon: "🌙" },
-    { id: "sects-and-violets", labelFr: "Sectes et Violettes", labelEn: "Sects & Violets", icon: "🔮" },
+    { id: "trouble-brewing", labelFr: "Tumulte en Brasserie", labelEn: "Trouble Brewing", icon: "◆" },
+    { id: "bad-moon-rising", labelFr: "Mauvaise Lune", labelEn: "Bad Moon Rising", icon: "◐" },
+    { id: "sects-and-violets", labelFr: "Sectes et Violettes", labelEn: "Sects & Violets", icon: "◈" },
   ];
 
   const types: { id: FilterType; labelFr: string; labelEn: string }[] = [

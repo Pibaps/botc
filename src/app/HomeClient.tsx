@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useLang } from "@/context/LangContext";
 import { editionMeta } from "@/data/characters";
 import { allCharacters } from "@/data/characters";
+import { editionArtwork } from "@/data/characterArtwork";
 import CharacterCard from "@/components/CharacterCard";
 
 // Deterministic pseudo-random based on seed (for hydration consistency)
@@ -508,7 +509,15 @@ export default function HomeClient() {
                       />
 
                       <div className="relative z-10">
-                        <div className="text-4xl mb-4">{ed.icon}</div>
+                        <div className="mb-4">
+                          <Image
+                            src={editionArtwork[edId]}
+                            alt={t(ed.nameFr, ed.nameEn)}
+                            width={64}
+                            height={64}
+                            className="h-16 w-auto"
+                          />
+                        </div>
                         <h3
                           className="text-cinzel font-bold text-xl mb-1"
                           style={{ color: ed.colorAccent }}
@@ -714,7 +723,8 @@ export default function HomeClient() {
             {[
               {
                 href: "/rules",
-                icon: "📜",
+                symbolFr: "◆",
+                symbolEn: "◆",
                 titleFr: "Règles",
                 titleEn: "Rules",
                 descFr: "La boucle de jeu, les victoires, les nominations, l'ordre de nuit — tout en détail.",
@@ -723,7 +733,8 @@ export default function HomeClient() {
               },
               {
                 href: "/characters",
-                icon: "🎭",
+                symbolFr: "◊",
+                symbolEn: "◊",
                 titleFr: "Personnages",
                 titleEn: "Characters",
                 descFr: "Tous les rôles des trois éditions avec leurs capacités complètes.",
@@ -732,7 +743,8 @@ export default function HomeClient() {
               },
               {
                 href: "/storyteller",
-                icon: "📖",
+                symbolFr: "▪",
+                symbolEn: "▪",
                 titleFr: "Guide du Conteur",
                 titleEn: "Storyteller Guide",
                 descFr: "Conseils pour animer une partie mémorable : équilibre, rythme, narration.",
@@ -741,7 +753,8 @@ export default function HomeClient() {
               },
               {
                 href: "/strategy",
-                icon: "⚔️",
+                symbolFr: "✦",
+                symbolEn: "✦",
                 titleFr: "Stratégie",
                 titleEn: "Strategy",
                 descFr: "Tactiques pour l'équipe bonne et l'équipe maléfique. Bluff, déduction, vote.",
@@ -750,7 +763,8 @@ export default function HomeClient() {
               },
               {
                 href: "/glossary",
-                icon: "📚",
+                symbolFr: "◈",
+                symbolEn: "◈",
                 titleFr: "Glossaire",
                 titleEn: "Glossary",
                 descFr: "Définitions de tous les termes, états et mécaniques du jeu.",
@@ -759,14 +773,15 @@ export default function HomeClient() {
               },
               {
                 href: "/rules#setup",
-                icon: "🎲",
+                symbolFr: "⬢",
+                symbolEn: "⬢",
                 titleFr: "Mise en Place",
                 titleEn: "Setup",
                 descFr: "Comment préparer une partie de A à Z selon le nombre de joueurs.",
                 descEn: "How to set up a game from scratch based on player count.",
                 accent: "#5c8a5c",
               },
-            ].map(({ href, icon, titleFr, titleEn, descFr, descEn, accent }, i) => (
+            ].map(({ href, symbolFr, symbolEn, titleFr, titleEn, descFr, descEn, accent }, i) => (
               <RevealSection key={href} delay={i * 0.08}>
                 <Link
                   href={href}
@@ -777,7 +792,7 @@ export default function HomeClient() {
                   }}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{icon}</span>
+                    <span className="text-2xl">{symbolFr}</span>
                     <h3
                       className="text-cinzel font-semibold text-sm tracking-wide"
                       style={{ color: accent }}
