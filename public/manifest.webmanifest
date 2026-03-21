@@ -1,0 +1,19 @@
+{
+  "name": "Blood on the Clocktower Guide",
+  "short_name": "BOTC Guide",
+  "description": "Guide mobile offline-first pour Blood on the Clocktower.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0a0506",
+  "theme_color": "#0a0506",
+  "icons": [
+    {
+      "src": "/assets/botc/bloodontheclocktower.com/logo-col-761a58be43.png",
+      "sizes": "1723x1723",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

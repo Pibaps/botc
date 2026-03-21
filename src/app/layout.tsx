@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cinzel, Libre_Baskerville, JetBrains_Mono } from "next/font/google";
 import Navigation from "@/components/Navigation";
 import { LangProvider } from "@/context/LangContext";
@@ -31,14 +31,29 @@ export const metadata: Metadata = {
   description:
     "Guide complet de Blood on the Clocktower : personnages, règles, stratégies, conseils du conteur. Disponible en français et en anglais.",
   keywords: ["blood on the clocktower", "BOTC", "guide", "wiki", "jeu"],
+  manifest: "/manifest.webmanifest",
   icons: {
     icon: "/favicon.ico",
+  },
+  appleWebApp: {
+    capable: true,
+    title: "BOTC",
+    statusBarStyle: "black-translucent",
   },
   // prevent search engines from indexing or following links
   robots: {
     index: false,
     follow: false,
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0a0506",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({

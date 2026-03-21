@@ -1,23 +1,25 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { type GrimoireSession } from "./types";
 import { loadGrimoire, saveGrimoire, clearGrimoire } from "./storage";
 import SetupWizard from "./components/SetupWizard";
 import GrimoireBoard from "./components/GrimoireBoard";
 
 export default function GrimoireClient() {
-  const [session, setSession] = useState<GrimoireSession | null>(null);
+  const [session, setSession] = useState<GrimoireSession | null>(() => loadGrimoire());
   const [loaded, setLoaded] = useState(false);
+  const sessionRef = useRef<GrimoireSession | null>(null);
 
   // Load from localStorage on mount
   useEffect(() => {
-    const saved = loadGrimoire();
-    if (saved) {
-      setSession(saved);
-    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoaded(true);
   }, []);
+
+  useEffect(() => {
+    sessionRef.current = session;
+  }, [session]);
 
   // Save to localStorage on every session change
   useEffect(() => {
@@ -25,6 +27,32 @@ export default function GrimoireClient() {
       saveGrimoire(session);
     }
   }, [session, loaded]);
+
+  useEffect(() => {
+    if (!loaded) return;
+
+    const flushSession = () => {
+      if (sessionRef.current) {
+        saveGrimoire(sessionRef.current);
+      }
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        flushSession();
+      }
+    };
+
+    window.addEventListener("pagehide", flushSession);
+    window.addEventListener("beforeunload", flushSession);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener("pagehide", flushSession);
+      window.removeEventListener("beforeunload", flushSession);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, [loaded]);
 
   const handleStart = useCallback((newSession: GrimoireSession) => {
     setSession(newSession);
