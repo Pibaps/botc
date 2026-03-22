@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLang } from "@/context/LangContext";
+import { isMobileBuild } from "@/config/buildMode";
 import { rules, setupGuide, type ContentSection } from "@/data/content";
 
 function SectionBlock({ section, depth = 0 }: { section: ContentSection; depth?: number }) {
@@ -14,11 +15,11 @@ function SectionBlock({ section, depth = 0 }: { section: ContentSection; depth?:
       style={{
         background: depth === 0 ? "rgba(20,8,13,0.5)" : "rgba(20,8,13,0.3)",
         border: depth === 0 ? "1px solid rgba(201,168,76,0.12)" : "1px solid rgba(139,0,0,0.12)",
-        marginLeft: depth > 0 ? "1.5rem" : "0",
+        marginLeft: depth > 0 ? (isMobileBuild ? "0.75rem" : "1.5rem") : "0",
       }}
     >
       <button
-        className="w-full flex items-center justify-between gap-4 px-6 py-4 text-left"
+        className={`w-full flex items-center justify-between gap-4 text-left ${isMobileBuild ? "px-4 py-3" : "px-6 py-4"}`}
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
       >
@@ -40,7 +41,7 @@ function SectionBlock({ section, depth = 0 }: { section: ContentSection; depth?:
       </button>
 
       {open && (
-        <div className="px-6 pb-5">
+        <div className={isMobileBuild ? "px-4 pb-4" : "px-6 pb-5"}>
           <div className="h-px mb-4" style={{ background: "rgba(139,0,0,0.2)" }} />
           <p className="text-baskerville leading-relaxed" style={{ color: "#c9b891", fontSize: "0.95rem" }}>
             {t(section.contentFr, section.content)}
@@ -79,7 +80,7 @@ export default function RulesPage() {
     <div style={{ background: "#0a0506", minHeight: "100dvh" }}>
       {/* Header */}
       <div
-        className="pt-32 pb-16 px-6 text-center relative overflow-hidden"
+        className={`text-center relative overflow-hidden ${isMobileBuild ? "pt-24 pb-10 px-4" : "pt-32 pb-16 px-6"}`}
         style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%)" }}
       >
         <p className="text-xs tracking-widest uppercase text-cinzel mb-4" style={{ color: "#8B0000" }}>
@@ -100,8 +101,8 @@ export default function RulesPage() {
       </div>
 
       {/* Tabs */}
-      <div className="px-6 pb-4">
-        <div className="max-w-4xl mx-auto flex gap-2 justify-center">
+      <div className={isMobileBuild ? "px-4 pb-4" : "px-6 pb-4"}>
+        <div className={`max-w-4xl mx-auto flex gap-2 justify-center ${isMobileBuild ? "flex-col" : ""}`}>
           {[
             { id: "rules" as const, labelFr: "Règles", labelEn: "Rules" },
             { id: "setup" as const, labelFr: "Mise en Place", labelEn: "Setup" },
@@ -109,7 +110,7 @@ export default function RulesPage() {
             <button
               key={id}
               onClick={() => setTab(id)}
-              className="px-6 py-2.5 rounded-full text-cinzel text-xs tracking-widest uppercase transition-all duration-200"
+              className={`rounded-full text-cinzel text-xs tracking-widest uppercase transition-all duration-200 ${isMobileBuild ? "px-4 py-3" : "px-6 py-2.5"}`}
               style={{
                 background: tab === id ? "rgba(139,0,0,0.25)" : "rgba(20,8,13,0.5)",
                 border: `1px solid ${tab === id ? "rgba(139,0,0,0.5)" : "rgba(139,0,0,0.15)"}`,
@@ -123,7 +124,7 @@ export default function RulesPage() {
       </div>
 
       {/* Content */}
-      <div className="px-6 py-8 pb-24">
+      <div className={isMobileBuild ? "px-4 py-6 pb-28" : "px-6 py-8 pb-24"}>
         <div className="max-w-4xl mx-auto space-y-4">
           {tab === "rules" && (
             <>

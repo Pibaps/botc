@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Image from "next/image";
 import { useLang } from "@/context/LangContext";
+import { isMobileBuild } from "@/config/buildMode";
 import { glossary, glossaryByCategory, categoryLabels, type GlossaryTerm } from "@/data/glossary";
+import IconLegend, { type IconLegendItem } from "@/components/IconLegend";
 
 const ALPHA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -27,16 +30,21 @@ function TermCard({ term }: { term: GlossaryTerm }) {
         aria-expanded={open}
       >
         <div className="flex items-center gap-3">
-          <span
-            className="text-cinzel text-xs w-7 h-7 flex items-center justify-center rounded shrink-0"
+          <div
+            className="relative w-8 h-8 rounded-full overflow-hidden shrink-0 flex items-center justify-center"
             style={{
-              background: "rgba(139,0,0,0.15)",
-              color: "#8B0000",
-              fontWeight: 700,
+              background: term.icon ? "rgba(20,8,13,0.7)" : "rgba(139,0,0,0.15)",
+              border: `1px solid ${term.icon ? "rgba(201,168,76,0.2)" : "rgba(139,0,0,0.15)"}`,
             }}
           >
-            {name[0]?.toUpperCase()}
-          </span>
+            {term.icon ? (
+              <Image src={term.icon.src} alt={term.icon.alt} fill sizes="32px" className="object-cover" />
+            ) : (
+              <span className="text-cinzel text-xs" style={{ color: "#8B0000", fontWeight: 700 }}>
+                {name[0]?.toUpperCase()}
+              </span>
+            )}
+          </div>
           <div>
             <span className="text-cinzel font-semibold" style={{ color: "#f4ebd0", fontSize: "0.95rem" }}>
               {name}
@@ -88,6 +96,22 @@ export default function GlossaryPage() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [activeLetter, setActiveLetter] = useState<string>("all");
 
+  const iconLegendItems: IconLegendItem[] = useMemo(
+    () =>
+      glossary
+        .filter((term) => term.icon)
+        .map((term) => ({
+          labelFr: term.termFr,
+          labelEn: term.term,
+          descriptionFr: term.definitionFr,
+          descriptionEn: term.definition,
+          color: "#c9a84c",
+          icon: term.icon,
+        }))
+        .slice(0, 12),
+    []
+  );
+
   const filtered = useMemo(() => {
     return glossary.filter((term) => {
       const name = lang === "fr" ? term.termFr : term.term;
@@ -116,7 +140,7 @@ export default function GlossaryPage() {
     <div style={{ background: "#0a0506", minHeight: "100dvh" }}>
       {/* Header */}
       <div
-        className="pt-32 pb-16 px-6 text-center relative overflow-hidden"
+        className={`text-center relative overflow-hidden ${isMobileBuild ? "pt-24 pb-10 px-4" : "pt-32 pb-16 px-6"}`}
         style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(201,168,76,0.06) 0%, transparent 70%)" }}
       >
         <p className="text-xs tracking-widest uppercase text-cinzel mb-4" style={{ color: "#8B0000" }}>
@@ -144,7 +168,7 @@ export default function GlossaryPage() {
             ⌕
           </span>
           <input
-            className="w-full pl-10 pr-4 py-3 rounded-xl text-sm text-baskerville"
+            className={`w-full pl-10 pr-4 rounded-xl text-sm text-baskerville ${isMobileBuild ? "py-3.5" : "py-3"}`}
             style={{
               background: "rgba(20,8,13,0.7)",
               border: "1px solid rgba(201,168,76,0.15)",
@@ -158,13 +182,13 @@ export default function GlossaryPage() {
         </div>
       </div>
 
-      <div className="px-6 pb-24">
+      <div className={isMobileBuild ? "px-4 pb-28" : "px-6 pb-24"}>
         <div className="max-w-4xl mx-auto">
           {/* Category tabs */}
           <div className="flex flex-wrap gap-2 mb-6">
             <button
               onClick={() => setActiveCategory("all")}
-              className="px-4 py-1.5 rounded-full text-cinzel text-xs tracking-widest uppercase transition-all duration-200"
+              className={`rounded-full text-cinzel text-xs tracking-widest uppercase transition-all duration-200 ${isMobileBuild ? "px-4 py-2.5 min-h-10" : "px-4 py-1.5"}`}
               style={{
                 background: activeCategory === "all" ? "rgba(139,0,0,0.25)" : "rgba(20,8,13,0.5)",
                 border: `1px solid ${activeCategory === "all" ? "rgba(139,0,0,0.5)" : "rgba(139,0,0,0.15)"}`,
@@ -177,7 +201,7 @@ export default function GlossaryPage() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className="px-4 py-1.5 rounded-full text-cinzel text-xs tracking-widest uppercase transition-all duration-200"
+                className={`rounded-full text-cinzel text-xs tracking-widest uppercase transition-all duration-200 ${isMobileBuild ? "px-4 py-2.5 min-h-10" : "px-4 py-1.5"}`}
                 style={{
                   background: activeCategory === cat ? "rgba(139,0,0,0.25)" : "rgba(20,8,13,0.5)",
                   border: `1px solid ${activeCategory === cat ? "rgba(139,0,0,0.5)" : "rgba(139,0,0,0.15)"}`,
@@ -192,7 +216,8 @@ export default function GlossaryPage() {
           </div>
 
           {/* Alphabet bar */}
-          <div className="flex flex-wrap gap-1 mb-8">
+          <div className={`flex flex-wrap gap-1 mb-8 ${isMobileBuild ? "justify-center" : ""}`}>
+            {!isMobileBuild && (
             <button
               onClick={() => setActiveLetter("all")}
               className="w-8 h-8 rounded text-cinzel text-xs font-bold transition-all duration-150"
@@ -204,8 +229,12 @@ export default function GlossaryPage() {
             >
               #
             </button>
+            )}
             {ALPHA.map((letter) => {
               const has = presentLetters.has(letter);
+              if (isMobileBuild && !has) {
+                return null;
+              }
               return (
                 <button
                   key={letter}
@@ -254,6 +283,10 @@ export default function GlossaryPage() {
               </div>
             </>
           )}
+
+          <div className="mt-10">
+            <IconLegend titleFr="Icônes du glossaire" titleEn="Glossary Icons" items={iconLegendItems} />
+          </div>
         </div>
       </div>
     </div>

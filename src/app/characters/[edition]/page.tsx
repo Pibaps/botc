@@ -2,10 +2,6 @@ import { notFound } from "next/navigation";
 import { charactersByEdition, editionMeta, type Edition } from "@/data/characters";
 import EditionClient from "./EditionClient";
 
-interface Props {
-  params: { edition: string };
-}
-
 export function generateStaticParams() {
   return [
     { edition: "trouble-brewing" },
@@ -17,8 +13,13 @@ export function generateStaticParams() {
 
 export const dynamicParams = false;
 
-export default function EditionPage({ params }: Props) {
-  const editionId = params.edition as Edition;
+export default async function EditionPage({
+  params,
+}: {
+  params: Promise<{ edition: string }> | { edition: string };
+}) {
+  const { edition } = await params;
+  const editionId = edition as Edition;
   const ed = editionMeta[editionId];
 
   if (!ed) notFound();

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import CharacterCard from "@/components/CharacterCard";
 import { useLang } from "@/context/LangContext";
+import { isMobileBuild } from "@/config/buildMode";
 import { editionArtwork } from "@/data/characterArtwork";
 import { charactersByEdition, charactersByType, editionMeta, type Edition } from "@/data/characters";
 
@@ -27,7 +28,7 @@ export default function EditionClient({ editionId, charCount }: Props) {
   return (
     <div style={{ background: "#0a0506", minHeight: "100dvh" }}>
       <div
-        className="pt-32 pb-20 px-6 relative overflow-hidden"
+        className={`relative overflow-hidden ${isMobileBuild ? "pt-24 pb-12 px-4" : "pt-32 pb-20 px-6"}`}
         style={{
           background: `linear-gradient(180deg, ${ed.color}18 0%, transparent 60%)`,
         }}
@@ -63,7 +64,7 @@ export default function EditionClient({ editionId, charCount }: Props) {
           <p className="text-baskerville text-lg leading-relaxed max-w-2xl mx-auto" style={{ color: "#c9b891" }}>
             {t(ed.synopsisFr, ed.synopsis)}
           </p>
-          <div className="flex justify-center gap-6 mt-8">
+          <div className={`mt-8 ${isMobileBuild ? "grid grid-cols-2 gap-4" : "flex justify-center gap-6"}`}>
             <div className="text-center">
               <div className="text-cinzel text-2xl font-bold" style={{ color: ed.colorAccent }}>{charCount}</div>
               <div className="text-xs text-cinzel tracking-widest uppercase" style={{ color: "#6b7a8d" }}>{t("Personnages", "Characters")}</div>
@@ -78,7 +79,7 @@ export default function EditionClient({ editionId, charCount }: Props) {
         </div>
       </div>
 
-      <div className="px-6 py-12">
+      <div className={isMobileBuild ? "px-4 py-8" : "px-6 py-12"}>
         <div className="max-w-6xl mx-auto space-y-16">
           {sections.map(({ key, labelFr, labelEn }) => {
             const list = grouped[key];
@@ -97,7 +98,7 @@ export default function EditionClient({ editionId, charCount }: Props) {
                   </span>
                   <div className="flex-1 h-px" style={{ background: "linear-gradient(to right, rgba(139,0,0,0.3), transparent)" }} />
                 </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <div className={`grid gap-4 ${isMobileBuild ? "grid-cols-1" : "sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"}`}>
                   {list.map((char) => (
                     <CharacterCard key={char.id} character={char} />
                   ))}

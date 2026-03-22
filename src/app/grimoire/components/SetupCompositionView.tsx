@@ -35,7 +35,7 @@ export default function SetupCompositionView({ composition }: Props) {
       <label className="text-cinzel text-sm tracking-widest uppercase" style={{ color: "#c9a84c" }}>
         {t("Composition", "Composition")}
       </label>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {activeSlots.map((slot) => {
           const info = slotLabels[slot];
           const count = composition.totals[slot];

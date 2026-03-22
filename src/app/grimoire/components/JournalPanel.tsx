@@ -2,15 +2,18 @@
 
 import { useState } from "react";
 import { useLang } from "@/context/LangContext";
+import { isMobileBuild } from "@/config/buildMode";
 import { type JournalEntry, type GamePhase } from "../types";
+import { DayIcon, NightIcon } from "./PhaseIcons";
 
 interface Props {
   entries: JournalEntry[];
   currentPhase: GamePhase;
   onAddEntry: (message: string) => void;
+  panelId?: string;
 }
 
-export default function JournalPanel({ entries, currentPhase, onAddEntry }: Props) {
+export default function JournalPanel({ entries, currentPhase, onAddEntry, panelId }: Props) {
   const { t } = useLang();
   const [newMessage, setNewMessage] = useState("");
   const [filter, setFilter] = useState<"all" | "night" | "day">("all");
@@ -25,42 +28,52 @@ export default function JournalPanel({ entries, currentPhase, onAddEntry }: Prop
 
   return (
     <div
+      id={panelId}
       className="rounded-xl p-4"
       style={{
         background: "rgba(20,8,13,0.5)",
         border: "1px solid rgba(139,0,0,0.15)",
       }}
     >
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
         <h3 className="text-cinzel font-bold text-sm tracking-widest uppercase" style={{ color: "#c9a84c" }}>
           ▮ {t("Journal", "Journal")}
         </h3>
-        <div className="flex gap-1">
+        <div className="flex gap-1 flex-wrap">
           {(["all", "night", "day"] as const).map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className="px-2 py-1 rounded text-xs text-cinzel transition-all duration-150"
+              className={`rounded text-xs text-cinzel transition-all duration-150 ${isMobileBuild ? "min-h-10 px-3 py-2" : "px-2 py-1"}`}
               style={{
                 background: filter === f ? "rgba(139,0,0,0.2)" : "transparent",
                 color: filter === f ? "#f4ebd0" : "#666",
               }}
             >
-              {f === "all" ? t("Tout", "All") : f === "night" ? "◐" : "◑"}
+              <span className="inline-flex items-center gap-1">
+                {f === "all" ? (
+                  <span aria-hidden="true">☰</span>
+                ) : f === "night" ? (
+                  <NightIcon className="h-3.5 w-3.5" />
+                ) : (
+                  <DayIcon className="h-3.5 w-3.5" />
+                )}
+                <span>{f === "all" ? t("Tout", "All") : f === "night" ? t("Nuit", "Night") : t("Jour", "Day")}</span>
+              </span>
             </button>
           ))}
         </div>
       </div>
 
       {/* Add entry */}
-      <div className="flex gap-2 mb-3">
+      <div className={`flex gap-2 mb-3 ${isMobileBuild ? "flex-col" : ""}`}>
         <input
           type="text"
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
           placeholder={t("Ajouter une note...", "Add a note...")}
-          className="flex-1 rounded-lg px-3 py-2 text-baskerville text-xs outline-none"
+          className={`flex-1 rounded-lg text-baskerville text-xs outline-none ${isMobileBuild ? "min-h-12 px-4 py-3" : "px-3 py-2"}`}
           style={{
             background: "rgba(20,8,13,0.5)",
             border: "1px solid rgba(139,0,0,0.1)",
@@ -69,7 +82,7 @@ export default function JournalPanel({ entries, currentPhase, onAddEntry }: Prop
         />
         <button
           onClick={handleSubmit}
-          className="px-3 py-2 rounded-lg text-xs text-cinzel transition-all duration-150"
+          className={`rounded-lg text-xs text-cinzel transition-all duration-150 ${isMobileBuild ? "min-h-12 px-4 py-3" : "px-3 py-2"}`}
           style={{
             background: "rgba(139,0,0,0.2)",
             border: "1px solid rgba(139,0,0,0.3)",
@@ -96,7 +109,11 @@ export default function JournalPanel({ entries, currentPhase, onAddEntry }: Prop
                 border: "1px solid rgba(139,0,0,0.05)",
               }}
             >
-              <span className="text-xs mt-0.5">{entry.phase === "night" ? "◐" : "◑"}</span>
+              {entry.phase === "night" ? (
+                <NightIcon className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+              ) : (
+                <DayIcon className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+              )}
               <div className="flex-1">
                 <p className="text-baskerville text-xs" style={{ color: "#c9b891" }}>
                   {entry.message}

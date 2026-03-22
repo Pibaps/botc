@@ -112,6 +112,8 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 :root {
@@ -124,6 +126,87 @@ body {
   font-family: var(--font-baskerville-var), 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   min-height: 100dvh;
   overflow-x: hidden;
+  width: 100%;
+}
+
+main {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+.grimoire-page {
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+body.botc-mobile-build {
+  --botc-mobile-topbar-height: 4.5rem;
+  --botc-mobile-bottombar-height: 5.5rem;
+}
+
+body.botc-mobile-build .botc-mobile-main {
+  padding-top: calc(var(--botc-mobile-topbar-height) + env(safe-area-inset-top));
+  padding-bottom: calc(var(--botc-mobile-bottombar-height) + env(safe-area-inset-bottom));
+}
+
+body.botc-mobile-build .botc-mobile-topbar {
+  padding-top: env(safe-area-inset-top);
+  background: linear-gradient(180deg, rgba(10,5,6,0.98), rgba(10,5,6,0.92));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(139,0,0,0.2);
+}
+
+body.botc-mobile-build .botc-mobile-bottombar {
+  padding-bottom: env(safe-area-inset-bottom);
+  background: linear-gradient(180deg, rgba(10,5,6,0.88), rgba(10,5,6,0.98));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-color: rgba(139,0,0,0.22);
+}
+
+body.botc-mobile-build .botc-mobile-action {
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(201,168,76,0.18);
+  background: rgba(201,168,76,0.06);
+  color: #c9a84c;
+  padding: 0.625rem 0.85rem;
+  font-size: 0.75rem;
+  font-family: var(--font-cinzel-var), 'Trajan Pro', 'Times New Roman', serif;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+body.botc-mobile-build .botc-mobile-action:hover {
+  background: rgba(201,168,76,0.1);
+}
+
+body.botc-mobile-build .botc-mobile-overlay {
+  pointer-events: none;
+}
+
+body.botc-mobile-build .botc-mobile-overlay > div {
+  pointer-events: auto;
+  background: rgba(10,5,6,0.98);
+}
+
+body.botc-mobile-build .botc-mobile-bottombar a {
+  border: 1px solid transparent;
+}
+
+body.botc-mobile-build .botc-mobile-bottombar a[aria-current="page"],
+body.botc-mobile-build .botc-mobile-bottombar a:hover {
+  color: #f4ebd0;
+  background: rgba(139,0,0,0.14);
+  border-color: rgba(201,168,76,0.15);
 }
 
 /* ── Typography ──────────────────────────────────────────── */

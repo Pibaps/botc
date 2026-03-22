@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import CharacterCard from "@/components/CharacterCard";
 import { useLang } from "@/context/LangContext";
+import { isMobileBuild } from "@/config/buildMode";
 import { editionArtwork } from "@/data/characterArtwork";
 import {
   allCharacters,
@@ -59,7 +60,7 @@ export default function CharactersPage() {
     <div style={{ background: "#0a0506", minHeight: "100dvh" }}>
       {/* Header */}
       <div
-        className="pt-32 pb-16 px-6 text-center relative overflow-hidden"
+        className={`text-center relative overflow-hidden ${isMobileBuild ? "pt-24 pb-10 px-4" : "pt-32 pb-16 px-6"}`}
         style={{
           background: "linear-gradient(180deg, rgba(139,0,0,0.08) 0%, transparent 100%)",
         }}
@@ -87,8 +88,8 @@ export default function CharactersPage() {
       </div>
 
       {/* Edition cards */}
-      <div className="px-6 pb-8">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-3 gap-4">
+      <div className={isMobileBuild ? "px-4 pb-6" : "px-6 pb-8"}>
+        <div className={`max-w-6xl mx-auto grid gap-4 ${isMobileBuild ? "grid-cols-1" : "md:grid-cols-3"}`}>
           {(["trouble-brewing", "bad-moon-rising", "sects-and-violets"] as Edition[]).map((edId) => {
             const ed = editionMeta[edId];
             const count = charactersByEdition[edId].length;
@@ -130,7 +131,7 @@ export default function CharactersPage() {
 
       {/* Filters */}
       <div
-        className="sticky top-16 z-30 px-6 py-4 border-b"
+        className={`sticky z-30 border-b ${isMobileBuild ? "top-20 px-4 py-3" : "top-16 px-6 py-4"}`}
         style={{
           background: "rgba(10,5,6,0.92)",
           backdropFilter: "blur(12px)",
@@ -153,14 +154,14 @@ export default function CharactersPage() {
           />
 
           {/* Filter row */}
-          <div className="flex flex-wrap items-center gap-4">
+          <div className={`flex flex-wrap items-center ${isMobileBuild ? "gap-2" : "gap-4"}`}>
             {/* Edition filter */}
             <div className="flex flex-wrap gap-1.5">
               {editions.map(({ id, labelFr, labelEn, icon }) => (
                 <button
                   key={id}
                   onClick={() => setFilterEdition(id)}
-                  className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium text-cinzel tracking-wide transition-all duration-200"
+                  className={`flex items-center gap-1.5 rounded-full text-xs font-medium text-cinzel tracking-wide transition-all duration-200 ${isMobileBuild ? "min-h-10 px-3 py-2" : "px-3 py-1"}`}
                   style={{
                     background: filterEdition === id ? "rgba(139,0,0,0.3)" : "rgba(20,8,13,0.5)",
                     border: `1px solid ${filterEdition === id ? "rgba(139,0,0,0.6)" : "rgba(139,0,0,0.15)"}`,
@@ -178,12 +179,12 @@ export default function CharactersPage() {
                   ) : (
                     <span>{icon}</span>
                   )}
-                  <span className="hidden sm:inline">{t(labelFr, labelEn)}</span>
+                  <span className={isMobileBuild ? "hidden" : "hidden sm:inline"}>{t(labelFr, labelEn)}</span>
                 </button>
               ))}
             </div>
 
-            <div className="w-px h-4 shrink-0" style={{ background: "rgba(139,0,0,0.3)" }} />
+            {!isMobileBuild && <div className="w-px h-4 shrink-0" style={{ background: "rgba(139,0,0,0.3)" }} />}
 
             {/* Type filter */}
             <div className="flex flex-wrap gap-1.5">
@@ -191,7 +192,7 @@ export default function CharactersPage() {
                 <button
                   key={id}
                   onClick={() => setFilterType(id)}
-                  className="px-3 py-1 rounded-full text-xs font-medium text-cinzel tracking-wide transition-all duration-200"
+                  className={`rounded-full text-xs font-medium text-cinzel tracking-wide transition-all duration-200 ${isMobileBuild ? "min-h-10 px-3 py-2" : "px-3 py-1"}`}
                   style={{
                     background: filterType === id ? "rgba(201,168,76,0.15)" : "rgba(20,8,13,0.5)",
                     border: `1px solid ${filterType === id ? "rgba(201,168,76,0.4)" : "rgba(201,168,76,0.1)"}`,
@@ -203,12 +204,12 @@ export default function CharactersPage() {
               ))}
             </div>
 
-            <div className="ml-auto flex gap-2">
+            <div className={`ml-auto flex gap-2 ${isMobileBuild ? "w-full justify-between" : ""}`}>
               {(["grid", "list"] as const).map((v) => (
                 <button
                   key={v}
                   onClick={() => setView(v)}
-                  className="w-8 h-8 flex items-center justify-center rounded transition-all duration-200"
+                  className="w-10 h-10 flex items-center justify-center rounded transition-all duration-200"
                   style={{
                     background: view === v ? "rgba(139,0,0,0.2)" : "transparent",
                     border: `1px solid ${view === v ? "rgba(139,0,0,0.4)" : "rgba(107,122,141,0.2)"}`,
@@ -225,7 +226,7 @@ export default function CharactersPage() {
       </div>
 
       {/* Results */}
-      <div className="px-6 py-8">
+      <div className={isMobileBuild ? "px-4 py-6" : "px-6 py-8"}>
         <div className="max-w-6xl mx-auto">
           <div className="text-xs mb-6" style={{ color: "#6b7a8d" }}>
             {filtered.length} {t("personnages affichés", "characters shown")}

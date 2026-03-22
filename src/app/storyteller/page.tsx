@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLang } from "@/context/LangContext";
+import { isMobileBuild } from "@/config/buildMode";
 import { storytellerAdvice, type ContentSection } from "@/data/content";
 
 function ArticleSection({ section, depth = 0 }: { section: ContentSection; depth?: number }) {
@@ -45,7 +46,7 @@ function WizardStep({
 
   return (
     <div
-      className="rounded-2xl p-8"
+      className={`rounded-2xl ${isMobileBuild ? "p-5" : "p-8"}`}
       style={{
         background: "rgba(20,8,13,0.6)",
         border: "1px solid rgba(201,168,76,0.15)",
@@ -103,7 +104,7 @@ function WizardStep({
         <button
           onClick={onPrev}
           disabled={index === 0}
-          className="px-5 py-2.5 rounded-lg text-cinzel text-sm tracking-wide transition-all duration-200"
+          className={`rounded-lg text-cinzel text-sm tracking-wide transition-all duration-200 ${isMobileBuild ? "px-4 py-3" : "px-5 py-2.5"}`}
           style={{
             background: index === 0 ? "transparent" : "rgba(20,8,13,0.6)",
             border: `1px solid ${index === 0 ? "transparent" : "rgba(139,0,0,0.3)"}`,
@@ -117,7 +118,7 @@ function WizardStep({
         {index < total - 1 ? (
           <button
             onClick={onNext}
-            className="px-6 py-2.5 rounded-lg text-cinzel text-sm tracking-wide transition-all duration-200"
+            className={`rounded-lg text-cinzel text-sm tracking-wide transition-all duration-200 ${isMobileBuild ? "px-5 py-3" : "px-6 py-2.5"}`}
             style={{
               background: "rgba(139,0,0,0.25)",
               border: "1px solid rgba(139,0,0,0.4)",
@@ -128,7 +129,7 @@ function WizardStep({
           </button>
         ) : (
           <div
-            className="px-6 py-2.5 rounded-lg text-cinzel text-sm tracking-wide"
+            className={`rounded-lg text-cinzel text-sm tracking-wide ${isMobileBuild ? "px-5 py-3" : "px-6 py-2.5"}`}
             style={{
               background: "rgba(201,168,76,0.1)",
               border: "1px solid rgba(201,168,76,0.3)",
@@ -152,7 +153,7 @@ export default function StorytellerPage() {
     <div style={{ background: "#0a0506", minHeight: "100dvh" }}>
       {/* Header */}
       <div
-        className="pt-32 pb-16 px-6 text-center relative overflow-hidden"
+        className={`text-center relative overflow-hidden ${isMobileBuild ? "pt-24 pb-10 px-4" : "pt-32 pb-16 px-6"}`}
         style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(139,0,0,0.07) 0%, transparent 70%)" }}
       >
         <p className="text-xs tracking-widest uppercase text-cinzel mb-4" style={{ color: "#8B0000" }}>
@@ -172,7 +173,7 @@ export default function StorytellerPage() {
         </p>
 
         {/* Mode toggle */}
-        <div className="mt-8 inline-flex rounded-xl overflow-hidden" style={{ border: "1px solid rgba(139,0,0,0.2)" }}>
+        <div className={`mt-8 inline-flex rounded-xl overflow-hidden ${isMobileBuild ? "flex-col w-full" : ""}`} style={{ border: "1px solid rgba(139,0,0,0.2)" }}>
           {[
             { id: "wizard" as const, labelFr: "Pas à pas", labelEn: "Step by Step" },
             { id: "article" as const, labelFr: "Article", labelEn: "Article" },
@@ -180,7 +181,7 @@ export default function StorytellerPage() {
             <button
               key={id}
               onClick={() => setMode(id)}
-              className="px-6 py-2.5 text-cinzel text-xs tracking-widest uppercase transition-all duration-200"
+              className={`text-cinzel text-xs tracking-widest uppercase transition-all duration-200 ${isMobileBuild ? "px-4 py-3" : "px-6 py-2.5"}`}
               style={{
                 background: mode === id ? "rgba(139,0,0,0.3)" : "rgba(20,8,13,0.6)",
                 color: mode === id ? "#f4ebd0" : "#6b7a8d",
@@ -194,7 +195,7 @@ export default function StorytellerPage() {
       </div>
 
       {/* Content */}
-      <div className="px-6 pb-24">
+      <div className={isMobileBuild ? "px-4 pb-28" : "px-6 pb-24"}>
         <div className="max-w-3xl mx-auto">
           {mode === "wizard" ? (
             <WizardStep
@@ -224,7 +225,7 @@ export default function StorytellerPage() {
                 <button
                   key={section.id}
                   onClick={() => setStep(i)}
-                  className="w-8 h-8 rounded-full text-cinzel text-xs font-bold transition-all duration-150"
+                  className={`rounded-full text-cinzel text-xs font-bold transition-all duration-150 ${isMobileBuild ? "w-10 h-10" : "w-8 h-8"}`}
                   style={{
                     background: step === i ? "rgba(139,0,0,0.3)" : "rgba(20,8,13,0.5)",
                     border: `1px solid ${step === i ? "rgba(139,0,0,0.5)" : "rgba(139,0,0,0.15)"}`,

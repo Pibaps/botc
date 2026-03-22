@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useLang } from "@/context/LangContext";
+import { isMobileBuild } from "@/config/buildMode";
 import { editionMeta } from "@/data/characters";
 import { allCharacters } from "@/data/characters";
 import { editionArtwork } from "@/data/characterArtwork";
@@ -17,9 +18,11 @@ function seededRandom(seed: number): number {
 
 // Mist particles for hero
 function Particles() {
+  const particleCount = isMobileBuild ? 6 : 12;
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {Array.from({ length: 12 }).map((_, i) => {
+      {Array.from({ length: particleCount }).map((_, i) => {
         const rand1 = seededRandom(i * 1.1);
         const rand2 = seededRandom(i * 2.3);
         const rand3 = seededRandom(i * 3.7);
@@ -133,7 +136,7 @@ export default function HomeClient() {
       ══════════════════════════════════════════════════════ */}
       <section
         className="relative min-h-dvh flex items-center justify-center overflow-hidden"
-        style={{ paddingTop: "80px" }}
+        style={{ paddingTop: isMobileBuild ? "5rem" : "80px" }}
       >
         {/* Real hero background image - slowest parallax layer */}
         <div
@@ -147,6 +150,7 @@ export default function HomeClient() {
             className="object-cover object-center"
             style={{ opacity: 0.28 }}
             priority
+            loading="eager"
           />
         </div>
 
@@ -302,6 +306,7 @@ export default function HomeClient() {
             height={620}
             className="w-full h-auto object-contain object-bottom"
             priority
+            loading="eager"
           />
         </div>
 
@@ -322,6 +327,7 @@ export default function HomeClient() {
             height={480}
             className="w-full h-auto object-contain object-bottom"
             priority
+            loading="eager"
           />
         </div>
 
@@ -597,6 +603,24 @@ export default function HomeClient() {
       {/* ══════════════════════════════════════════════════════
           GAME ATMOSPHERE GALLERY
       ══════════════════════════════════════════════════════ */}
+      {isMobileBuild ? (
+        <section className="px-4 py-12">
+          <div className="max-w-3xl mx-auto rounded-3xl border px-5 py-6" style={{ background: "rgba(20,8,13,0.65)", borderColor: "rgba(201,168,76,0.14)" }}>
+            <p className="text-xs tracking-widest uppercase text-cinzel mb-3" style={{ color: "#8B0000" }}>
+              {t("L'Atmosphère du Jeu", "The Game Atmosphere")}
+            </p>
+            <h2 className="text-cinzel font-bold mb-3" style={{ fontSize: "clamp(1.45rem, 4vw, 2rem)", color: "#f4ebd0" }}>
+              {t("Un univers sombre, lisible en mobilité", "A dark world designed for mobile clarity")}
+            </h2>
+            <p className="text-sm leading-relaxed" style={{ color: "#c9b891" }}>
+              {t(
+                "Sur mobile, l’accueil garde l’essentiel et retire les galeries les plus lourdes pour rester rapide, lisible et confortable hors ligne.",
+                "On mobile, the home keeps the essentials and removes the heaviest galleries to stay fast, readable, and offline-friendly."
+              )}
+            </p>
+          </div>
+        </section>
+      ) : (
       <section className="relative overflow-hidden py-0 my-0">
         {/* Section label */}
         <div className="relative z-10 py-10 text-center">
@@ -696,6 +720,7 @@ export default function HomeClient() {
 
         <div className="py-10" />
       </section>
+      )}
 
 
       {/* ══════════════════════════════════════════════════════

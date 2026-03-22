@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Cinzel, Libre_Baskerville, JetBrains_Mono } from "next/font/google";
 import Navigation from "@/components/Navigation";
 import { LangProvider } from "@/context/LangContext";
+import MobileNavigation from "@/components/MobileNavigation";
+import { isMobileBuild } from "@/config/buildMode";
 import "./globals.css";
 
 const cinzel = Cinzel({
@@ -66,10 +68,10 @@ export default function RootLayout({
       lang="fr"
       className={`${cinzel.variable} ${libreBaskerville.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="antialiased">
+      <body className={`antialiased${isMobileBuild ? " botc-mobile-build" : ""}`}>
         <LangProvider>
-          <Navigation />
-          <main>{children}</main>
+          {isMobileBuild ? <MobileNavigation /> : <Navigation />}
+          <main className={isMobileBuild ? "botc-mobile-main" : undefined}>{children}</main>
         </LangProvider>
       </body>
     </html>

@@ -217,7 +217,7 @@ export default function SetupCharacterSelection({
                       {t(info.fr, info.en)} ({slotSelected.length}/{slotChars.length})
                     </h3>
                   </div>
-                  <div className="grid grid-cols-2 gap-2 px-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 px-2">
                     {slotChars.map((char) => {
                       const isSelected = selectedCharacterIds.includes(char.id);
                       const slot = char.type;

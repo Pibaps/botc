@@ -1,16 +1,17 @@
 "use client";
 
 import { useLang } from "@/context/LangContext";
+import { isMobileBuild } from "@/config/buildMode";
 import GrimoireClient from "./GrimoireClient";
 
 export default function GrimoirePage() {
   const { t } = useLang();
 
   return (
-    <div style={{ background: "#0a0506", minHeight: "100dvh" }}>
+    <div className="grimoire-page overflow-x-hidden" style={{ background: "#0a0506", minHeight: "100dvh" }}>
       {/* Header */}
       <div
-        className="pt-32 pb-12 px-6 text-center relative overflow-hidden"
+        className={`text-center relative overflow-hidden ${isMobileBuild ? "pt-24 pb-10 px-4" : "pt-32 pb-12 px-6"}`}
         style={{
           background: "radial-gradient(ellipse at 50% 0%, rgba(139,0,0,0.07) 0%, transparent 70%)",
         }}
@@ -33,7 +34,7 @@ export default function GrimoirePage() {
       </div>
 
       {/* Content */}
-      <div className="px-4 md:px-6 pb-24">
+      <div className={`md:px-8 ${isMobileBuild ? "px-5 pb-28" : "px-5 pb-24"}`}>
         <div className="max-w-3xl mx-auto">
           <GrimoireClient />
         </div>

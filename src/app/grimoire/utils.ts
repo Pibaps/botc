@@ -99,6 +99,18 @@ export function shuffle<T>(array: T[]): T[] {
   return arr;
 }
 
+export function getUnusedRoles(edition: Edition, selectedCharacterIds: string[]): Character[] {
+  const selected = new Set(selectedCharacterIds);
+
+  return charactersByEdition[edition]
+    .filter((character) => !selected.has(character.id))
+    .sort((a, b) => a.type.localeCompare(b.type) || a.name.localeCompare(b.name));
+}
+
+export function pickImpBluffs(edition: Edition, selectedCharacterIds: string[], count = 3): Character[] {
+  return shuffle(getUnusedRoles(edition, selectedCharacterIds)).slice(0, count);
+}
+
 /**
  * Validate a script composition against BotC rules
  * Rules from wiki.bloodontheclocktower.com:

@@ -10,10 +10,10 @@
   "theme_color": "#0a0506",
   "icons": [
     {
-      "src": "/assets/botc/bloodontheclocktower.com/logo-col-761a58be43.png",
-      "sizes": "1723x1723",
+      "src": "/assets/botc/app-icons/botc-imp-dark.png",
+      "sizes": "591x591",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ]
 }

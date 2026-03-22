@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import { useLang } from "@/context/LangContext";
+import { isMobileBuild } from "@/config/buildMode";
 import { type PlayerEntry, type TokenKind, type PlayerState } from "../types";
 import { allCharacters } from "@/data/characters";
 import { characterArtwork } from "@/data/characterArtwork";
+import { glossaryIconMap } from "@/data/glossary";
 
 interface Props {
   player: PlayerEntry;
@@ -13,6 +15,7 @@ interface Props {
   onToggleToken: (token: TokenKind) => void;
   onSetState: (state: PlayerState) => void;
   onUpdateNotes: (notes: string) => void;
+  onOpenRole?: (characterId: string) => void;
 }
 
 const tokenInfo: Record<TokenKind, { icon: string; image?: string; key: string; color: string }> = {
@@ -43,10 +46,25 @@ const tokenInfo: Record<TokenKind, { icon: string; image?: string; key: string; 
   custom: { icon: "■", key: "custom", color: "#607d8b" },
 };
 
-const stateInfo: Record<PlayerState, { icon: string; key: string; color: string }> = {
-  alive: { icon: "●", key: "alive", color: "#4caf50" },
-  dead: { icon: "◯", key: "dead", color: "#666" },
-  executed: { icon: "■", key: "executed", color: "#8B0000" },
+const stateInfo: Record<PlayerState, { icon?: { src: string; alt: string }; fallback: string; key: string; color: string }> = {
+  alive: {
+    icon: glossaryIconMap.alive,
+    fallback: "●",
+    key: "alive",
+    color: "#4caf50",
+  },
+  dead: {
+    icon: glossaryIconMap.dead,
+    fallback: "◯",
+    key: "dead",
+    color: "#666",
+  },
+  executed: {
+    icon: glossaryIconMap.executed,
+    fallback: "■",
+    key: "executed",
+    color: "#8B0000",
+  },
 };
 
 export default function PlayerCard({
@@ -56,6 +74,7 @@ export default function PlayerCard({
   onToggleToken,
   onSetState,
   onUpdateNotes,
+  onOpenRole,
 }: Props) {
   const { t } = useLang();
   const character = allCharacters.find((c) => c.id === player.characterId);
@@ -78,7 +97,7 @@ export default function PlayerCard({
 
   return (
     <div
-      className="rounded-xl p-4 transition-all duration-200"
+      className={`rounded-xl transition-all duration-200 ${isMobileBuild ? "p-5" : "p-4"}`}
       style={{
         background: isDead ? "rgba(10,5,6,0.6)" : "rgba(20,8,13,0.5)",
         border: `1px solid ${isDead ? "rgba(100,100,100,0.15)" : "rgba(139,0,0,0.15)"}`,
@@ -86,7 +105,7 @@ export default function PlayerCard({
       }}
     >
       {/* Header row */}
-      <div className="flex items-center gap-3 mb-3">
+      <div className="flex items-center gap-3 mb-3 min-w-0">
         <div
           className="w-8 h-8 rounded-full flex items-center justify-center text-cinzel text-xs font-bold"
           style={{
@@ -101,23 +120,40 @@ export default function PlayerCard({
           type="text"
           value={player.name}
           onChange={(e) => onUpdateName(e.target.value)}
-          className="flex-1 bg-transparent text-cinzel font-semibold text-sm outline-none"
+          className={`min-w-0 flex-1 bg-transparent text-cinzel font-semibold outline-none ${isMobileBuild ? "text-base" : "text-sm"}`}
           style={{
             color: "#f4ebd0",
             borderBottom: "1px solid rgba(139,0,0,0.15)",
-            padding: "2px 4px",
+            padding: isMobileBuild ? "10px 6px" : "2px 4px",
           }}
         />
-        <span className="text-sm" title={player.state}>{state.icon}</span>
+        <span
+          className="relative h-9 w-9 rounded-full overflow-hidden flex items-center justify-center"
+          style={{ background: "rgba(20,8,13,0.45)", border: `1px solid ${state.color}55` }}
+          title={player.state}
+          aria-label={player.state}
+        >
+          {state.icon ? (
+            <Image src={state.icon.src} alt={state.icon.alt} fill sizes="36px" className="object-cover" />
+          ) : (
+            <span className="text-sm" style={{ color: state.color }}>
+              {state.fallback}
+            </span>
+          )}
+        </span>
       </div>
 
       {/* Character (secret) */}
       {showSecret && character && (
-        <div
-          className="rounded-lg p-2 mb-3 flex items-center gap-3"
+        <button
+          type="button"
+          onClick={() => character && onOpenRole?.(character.id)}
+          className="min-w-0 rounded-lg p-2 mb-3 flex items-center gap-3"
           style={{
             background: "rgba(139,0,0,0.08)",
             border: "1px solid rgba(139,0,0,0.1)",
+            width: "100%",
+            textAlign: "left",
           }}
         >
           <div
@@ -141,10 +177,10 @@ export default function PlayerCard({
               </span>
             )}
           </div>
-          <span className="text-cinzel text-xs font-semibold" style={{ color: "#f4ebd0" }}>
+          <span className="min-w-0 flex-1 truncate text-cinzel text-xs font-semibold" style={{ color: "#f4ebd0" }}>
             {t(character.nameFr, character.nameEn)}
           </span>
-        </div>
+        </button>
       )}
 
       {/* Tokens */}
@@ -160,7 +196,7 @@ export default function PlayerCard({
                 <button
                   key={tk}
                   onClick={() => onToggleToken(tk)}
-                  className="rounded-md px-2 py-1 text-xs transition-all duration-150"
+                  className={`rounded-md transition-all duration-150 ${isMobileBuild ? "min-h-11 px-3 py-2 text-sm" : "px-2 py-1 text-xs"}`}
                   style={{
                     background: isActive ? `${info.color}22` : "rgba(20,8,13,0.4)",
                     border: `1px solid ${isActive ? info.color : "rgba(100,100,100,0.15)"}`,
@@ -195,14 +231,23 @@ export default function PlayerCard({
             <button
               key={s}
               onClick={() => onSetState(s)}
-              className="flex-1 rounded-md py-1 text-xs text-cinzel transition-all duration-150"
+              className={`flex-1 rounded-md text-cinzel transition-all duration-150 ${isMobileBuild ? "min-h-12 py-3 text-sm" : "py-1 text-xs"}`}
               style={{
                 background: isActive ? "rgba(139,0,0,0.2)" : "rgba(20,8,13,0.3)",
                 border: `1px solid ${isActive ? info.color : "rgba(100,100,100,0.1)"}`,
                 color: isActive ? "#f4ebd0" : "#555",
               }}
             >
-              {info.icon} {stateLabels[s]}
+              <span className="inline-flex items-center gap-2">
+                {info.icon ? (
+                  <span className="relative h-4 w-4 overflow-hidden rounded-full">
+                    <Image src={info.icon.src} alt={info.icon.alt} fill sizes="16px" className="object-cover" />
+                  </span>
+                ) : (
+                  <span>{info.fallback}</span>
+                )}
+                <span>{stateLabels[s]}</span>
+              </span>
             </button>
           );
         })}
@@ -215,7 +260,7 @@ export default function PlayerCard({
           onChange={(e) => onUpdateNotes(e.target.value)}
           placeholder={t("Notes...", "Notes...")}
           rows={2}
-          className="w-full rounded-lg p-2 text-baskerville text-xs resize-none outline-none"
+          className={`w-full rounded-lg resize-none outline-none ${isMobileBuild ? "p-3 text-sm" : "p-2 text-xs"}`}
           style={{
             background: "rgba(20,8,13,0.4)",
             border: "1px solid rgba(139,0,0,0.08)",

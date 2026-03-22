@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 591 591" fill="none" role="img" aria-label="Blood on the Clocktower Imp icon">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="28%" r="72%">
+      <stop offset="0%" stop-color="#3a0000" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#160406" stop-opacity="0.98"/>
+      <stop offset="100%" stop-color="#050203" stop-opacity="1"/>
+    </radialGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8b0000" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="#220406" stop-opacity="0.92"/>
+    </linearGradient>
+    <filter id="shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000000" flood-opacity="0.75"/>
+    </filter>
+  </defs>
+
+  <rect width="591" height="591" rx="122" fill="url(#bgGlow)"/>
+  <rect x="20" y="20" width="551" height="551" rx="108" fill="none" stroke="url(#rim)" stroke-width="10" opacity="0.9"/>
+
+  <g opacity="0.32">
+    <path d="M112 474c34-62 91-97 182-97s148 35 183 97" stroke="#8b0000" stroke-width="12" stroke-linecap="round"/>
+    <path d="M166 147c35-25 74-37 129-37s94 12 128 37" stroke="#5a0a0a" stroke-width="10" stroke-linecap="round"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <circle cx="296" cy="294" r="158" fill="#0a0506"/>
+    <circle cx="296" cy="294" r="152" fill="none" stroke="#7f0d0d" stroke-width="7" opacity="0.65"/>
+    <circle cx="296" cy="294" r="145" fill="none" stroke="#c9a84c" stroke-opacity="0.08" stroke-width="2"/>
+  </g>
+
+  <image href="/assets/botc/wiki.bloodontheclocktower.com/Icon_imp-32541f1a31.png" x="176" y="174" width="240" height="240" preserveAspectRatio="xMidYMid meet"/>
+
+  <circle cx="196" cy="196" r="7" fill="#8b0000" opacity="0.8"/>
+  <circle cx="395" cy="196" r="7" fill="#8b0000" opacity="0.8"/>
+  <circle cx="196" cy="392" r="5" fill="#8b0000" opacity="0.55"/>
+  <circle cx="395" cy="392" r="5" fill="#8b0000" opacity="0.55"/>
+</svg>

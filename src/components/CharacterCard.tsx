@@ -90,6 +90,7 @@ export default function CharacterCard({ character, compact = false }: CharacterC
               fill
               sizes="40px"
               className="object-cover"
+              loading="lazy"
               onError={() => setImageErrored(true)}
             />
           ) : (
@@ -155,6 +156,7 @@ export default function CharacterCard({ character, compact = false }: CharacterC
               fill
               sizes="56px"
               className="object-cover"
+              loading="lazy"
               onError={() => setImageErrored(true)}
             />
           ) : (

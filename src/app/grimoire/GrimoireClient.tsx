@@ -1,21 +1,37 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { type GrimoireSession } from "./types";
-import { loadGrimoire, saveGrimoire, clearGrimoire } from "./storage";
+import { type GrimoireSession, type GrimoireSessionSummary } from "./types";
+import { loadGrimoire, saveGrimoire, clearGrimoire, deleteGrimoireSession, listGrimoireSessions, loadGrimoireById, renameGrimoireSession } from "./storage";
 import SetupWizard from "./components/SetupWizard";
 import GrimoireBoard from "./components/GrimoireBoard";
 
 export default function GrimoireClient() {
   const [session, setSession] = useState<GrimoireSession | null>(() => loadGrimoire());
+  const [history, setHistory] = useState<GrimoireSessionSummary[]>([]);
   const [loaded, setLoaded] = useState(false);
   const sessionRef = useRef<GrimoireSession | null>(null);
+
+  const refreshHistory = useCallback(() => {
+    setHistory(
+      listGrimoireSessions().map((game) => ({
+        id: game.id,
+        name: game.name,
+        edition: game.edition,
+        playerCount: game.setup.playerCount,
+        currentPhase: game.ui.currentPhase,
+        createdAt: game.createdAt,
+        updatedAt: game.updatedAt,
+      }))
+    );
+  }, []);
 
   // Load from localStorage on mount
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoaded(true);
-  }, []);
+    refreshHistory();
+  }, [refreshHistory]);
 
   useEffect(() => {
     sessionRef.current = session;
@@ -25,8 +41,9 @@ export default function GrimoireClient() {
   useEffect(() => {
     if (loaded && session) {
       saveGrimoire(session);
+      refreshHistory();
     }
-  }, [session, loaded]);
+  }, [session, loaded, refreshHistory]);
 
   useEffect(() => {
     if (!loaded) return;
@@ -58,6 +75,32 @@ export default function GrimoireClient() {
     setSession(newSession);
   }, []);
 
+  const handleResume = useCallback((sessionId: string) => {
+    const selected = loadGrimoireById(sessionId);
+    if (selected) {
+      setSession(selected);
+    }
+  }, []);
+
+  const handleDeleteSession = useCallback(
+    (sessionId: string) => {
+      deleteGrimoireSession(sessionId);
+      refreshHistory();
+    },
+    [refreshHistory]
+  );
+
+  const handleRenameSession = useCallback(
+    (sessionId: string, name: string) => {
+      const renamed = renameGrimoireSession(sessionId, name);
+      if (renamed && sessionRef.current?.id === sessionId) {
+        setSession(renamed);
+      }
+      refreshHistory();
+    },
+    [refreshHistory]
+  );
+
   const handleUpdateSession = useCallback(
     (updater: (prev: GrimoireSession) => GrimoireSession) => {
       setSession((prev) => {
@@ -71,7 +114,8 @@ export default function GrimoireClient() {
   const handleReset = useCallback(() => {
     clearGrimoire();
     setSession(null);
-  }, []);
+    refreshHistory();
+  }, [refreshHistory]);
 
   // Don't render until we've checked localStorage
   if (!loaded) {
@@ -85,7 +129,15 @@ export default function GrimoireClient() {
   }
 
   if (!session) {
-    return <SetupWizard onStart={handleStart} />;
+    return (
+      <SetupWizard
+        onStart={handleStart}
+        history={history}
+        onResume={handleResume}
+        onDelete={handleDeleteSession}
+        onRename={handleRenameSession}
+      />
+    );
   }
 
   return (

@@ -4,9 +4,14 @@ export type TokenKind = "poisoned" | "drunk" | "protected" | "night-kill" | "cus
 export type ScriptSlot = "townsfolk" | "outsider" | "minion" | "demon" | "traveller" | "fabled";
 export type GamePhase = "setup" | "night" | "day" | "end";
 
+export interface StorytellerState {
+  impBluffIds: string[];
+}
+
 export interface GrimoireSession {
   version: number;
   id: string;
+  name: string;
   createdAt: string;
   updatedAt: string;
   edition: Edition;
@@ -18,6 +23,7 @@ export interface GrimoireSession {
     showSecrets: boolean;
     dayNumber: number;
     nightNumber: number;
+    storyteller: StorytellerState;
   };
 }
 
@@ -62,4 +68,14 @@ export interface JournalEntry {
   phase: "night" | "day";
   message: string;
   meta?: Record<string, unknown>;
+}
+
+export interface GrimoireSessionSummary {
+  id: string;
+  name: string;
+  edition: Edition;
+  playerCount: number;
+  currentPhase: GamePhase;
+  createdAt: string;
+  updatedAt: string;
 }

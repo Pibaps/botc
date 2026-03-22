@@ -6,9 +6,10 @@ export interface GlossaryTerm {
   definitionFr: string;
   category: "state" | "mechanic" | "role" | "concept" | "game";
   relatedTerms?: string[];
+  icon?: { src: string; alt: string };
 }
 
-export const glossary: GlossaryTerm[] = [
+const baseGlossary: GlossaryTerm[] = [
   {
     id: "ability",
     term: "Ability",
@@ -263,6 +264,31 @@ export const glossary: GlossaryTerm[] = [
     relatedTerms: ["mutant", "cerenovus", "storyteller"],
   },
 ];
+
+export const glossaryIconMap: Record<string, { src: string; alt: string }> = {
+  alive: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_mayor-37b17a5ea8.png", alt: "Alive" },
+  character: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_investigator-3bc3af9bb4.png", alt: "Character" },
+  dead: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_undertaker-682bf687ee.png", alt: "Dead" },
+  demon: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_imp-32541f1a31.png", alt: "Demon" },
+  drunk: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_drunk-5ea4cf9d12.png", alt: "Drunk" },
+  evil: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_vortox-8de40d7a89.png", alt: "Evil" },
+  executed: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_investigator-3bc3af9bb4.png", alt: "Executed" },
+  good: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_mayor-37b17a5ea8.png", alt: "Good" },
+  grimoire: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_librarian-e466eb38b4.png", alt: "Grimoire" },
+  minion: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_scarletwoman-c5dedc4beb.png", alt: "Minion" },
+  outsider: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_recluse-cb8872b97c.png", alt: "Outsider" },
+  poisoned: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_poisoner-fd3059039e.png", alt: "Poisoned" },
+  storyteller: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_librarian-e466eb38b4.png", alt: "Storyteller" },
+  token: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_washerwoman-8b3da2bef1.png", alt: "Token" },
+  townsfolk: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_washerwoman-8b3da2bef1.png", alt: "Townsfolk" },
+  vote: { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_mayor-37b17a5ea8.png", alt: "Vote" },
+  "ghost-vote": { src: "/assets/botc/wiki.bloodontheclocktower.com/Icon_nightwatchman-334d67b702.png", alt: "Ghost vote" },
+};
+
+export const glossary: GlossaryTerm[] = baseGlossary.map((term) => ({
+  ...term,
+  icon: glossaryIconMap[term.id],
+}));
 
 export const glossaryByCategory = (terms: GlossaryTerm[]) =>
   terms.reduce<Record<string, GlossaryTerm[]>>((acc, term) => {

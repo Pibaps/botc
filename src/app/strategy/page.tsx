@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLang } from "@/context/LangContext";
+import { isMobileBuild } from "@/config/buildMode";
 import { playerStrategy, type ContentSection } from "@/data/content";
 
 const SIDE_COLORS = {
@@ -115,7 +116,7 @@ export default function StrategyPage() {
     <div style={{ background: "#0a0506", minHeight: "100dvh" }}>
       {/* Header */}
       <div
-        className="pt-32 pb-16 px-6 text-center relative overflow-hidden"
+        className={`text-center relative overflow-hidden ${isMobileBuild ? "pt-24 pb-10 px-4" : "pt-32 pb-16 px-6"}`}
         style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(42,95,168,0.05) 0%, transparent 50%), radial-gradient(ellipse at 50% 0%, rgba(139,0,0,0.05) 30%, transparent 70%)" }}
       >
         <p className="text-xs tracking-widest uppercase text-cinzel mb-4" style={{ color: "#8B0000" }}>
@@ -135,7 +136,7 @@ export default function StrategyPage() {
         </p>
 
         {/* Side filter */}
-        <div className="mt-8 inline-flex rounded-xl overflow-hidden" style={{ border: "1px solid rgba(139,0,0,0.2)" }}>
+        <div className={`mt-8 inline-flex rounded-xl overflow-hidden ${isMobileBuild ? "flex-col w-full" : ""}`} style={{ border: "1px solid rgba(139,0,0,0.2)" }}>
           {[
             { id: "all" as const, labelFr: "Les deux camps", labelEn: "Both sides" },
             { id: "good" as const, labelFr: "Gentils", labelEn: "Good" },
@@ -144,7 +145,7 @@ export default function StrategyPage() {
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className="px-5 py-2.5 text-cinzel text-xs tracking-widest uppercase transition-all duration-200"
+              className={`text-cinzel text-xs tracking-widest uppercase transition-all duration-200 ${isMobileBuild ? "px-4 py-3" : "px-5 py-2.5"}`}
               style={{
                 background: activeTab === id ? "rgba(139,0,0,0.3)" : "rgba(20,8,13,0.6)",
                 color:
@@ -165,16 +166,16 @@ export default function StrategyPage() {
       </div>
 
       {/* Dual-column layout */}
-      <div className="px-6 pb-24">
+      <div className={isMobileBuild ? "px-4 pb-28" : "px-6 pb-24"}>
         <div
           className={`max-w-6xl mx-auto ${
-            activeTab === "all" ? "grid grid-cols-1 lg:grid-cols-2 gap-8" : "max-w-3xl mx-auto space-y-6"
+            isMobileBuild ? "space-y-6" : activeTab === "all" ? "grid grid-cols-1 lg:grid-cols-2 gap-8" : "max-w-3xl mx-auto space-y-6"
           }`}
         >
           {/* Good column */}
           {visibleGood.length > 0 && (
             <div className="space-y-6">
-              {activeTab === "all" && (
+              {!isMobileBuild && activeTab === "all" && (
                 <div className="flex items-center gap-3 mb-2">
                   <div className="h-px flex-1" style={{ background: "rgba(42,95,168,0.2)" }} />
                   <span className="text-xs text-cinzel tracking-widest uppercase" style={{ color: "#2a5fa8" }}>
@@ -192,7 +193,7 @@ export default function StrategyPage() {
           {/* Evil column */}
           {visibleEvil.length > 0 && (
             <div className="space-y-6">
-              {activeTab === "all" && (
+              {!isMobileBuild && activeTab === "all" && (
                 <div className="flex items-center gap-3 mb-2">
                   <div className="h-px flex-1" style={{ background: "rgba(139,0,0,0.2)" }} />
                   <span className="text-xs text-cinzel tracking-widest uppercase" style={{ color: "#8B0000" }}>
@@ -209,7 +210,7 @@ export default function StrategyPage() {
 
           {/* Fallback: if no categorization matched, show all */}
           {visibleGood.length === 0 && visibleEvil.length === 0 && (
-            <div className="col-span-2 space-y-6">
+            <div className={`space-y-6 ${isMobileBuild ? "" : "col-span-2"}`}>
               {playerStrategy.map((section) => (
                 <StrategyPanel key={section.id} section={section} colors={SIDE_COLORS.good} />
               ))}
