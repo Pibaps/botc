@@ -45,17 +45,27 @@ export default function CirclePlayerBoard({ players, showSecrets, onMovePlayer }
 
     const updateSize = () => {
       const rect = element.getBoundingClientRect();
-      setBoardSize({ width: rect.width, height: rect.height });
+      let width = rect.width;
+      let height = rect.height;
+      if (!width || !height) {
+        width = window.innerWidth;
+        height = window.innerHeight;
+      }
+      setBoardSize({ width, height });
     };
 
     updateSize();
 
-    const observer = new ResizeObserver(() => {
-      updateSize();
-    });
+    if (typeof ResizeObserver === "function") {
+      const observer = new ResizeObserver(() => {
+        updateSize();
+      });
+      observer.observe(element);
+      return () => observer.disconnect();
+    }
 
-    observer.observe(element);
-    return () => observer.disconnect();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
 
   const sortedPlayers = useMemo(
